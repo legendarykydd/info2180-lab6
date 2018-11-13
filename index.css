@@ -1,0 +1,54 @@
+#header{
+    background-color: #00CED1;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 4px;
+    margin: auto;
+    width: 85%;
+    font: 100% Lucida Sans, Verdana;
+    font-size: 2.25em
+}
+
+.container{
+    background-color: #cac8ce;
+    color: #000000;
+    padding: 15px;
+    margin: auto;
+    border-radius: 4px;
+    width: 85%;
+    height: auto;
+}
+
+#searchArea{
+    border-bottom: 1px solid #e9e8ed;
+}
+
+#result{
+    font-size: 1.25em;
+    color: #000000;
+}
+
+#btnSearch{
+    background-color: #778899;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    
+}
+
+#btnAllSearch{
+     background-color: #778899;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+}
