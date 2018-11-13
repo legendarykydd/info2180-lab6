@@ -1,27 +1,59 @@
 "use strict";
 
-window.onload = function()
+function loadDefinitions(allSearch)
 {
-            var two = document.getElementById("two");
-                two.addEventListener("click", function(event)
+    var query = document.getElementById("queryTxtBox").value.toLowerCase();
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() 
+    {
+        if (this.readyState == 4 && this.status == 200) 
+        {
+            parseXMLData(this, allSearch, query);
+        }
+    };
+    xhttp.open("GET", "request.php", true);
+    xhttp.send();
+}
+
+function parseXMLData(xml, allSearch, query) 
+{
+    var i;
+    var xmlDoc = xml.responseXML;
+    var allDef="<ol>";
+    var x = xmlDoc.getElementsByTagName("definition");
+    var notFound = true;
+    
+    if (allSearch) // Returns all definitions
+    {
+        for (i = 0; i <x.length; i++) 
+        { 
+            allDef += "<li>" + "<h3>" + x[i].getAttributeNode("name").value + "</h3>" + 
+            "<p>" + x[i].childNodes[0].nodeValue + "</p>" +                             
+            "<p> - " + x[i].getAttributeNode("author").value + "</p>" +                 
+            "</li>";  
+        }
+        allDef += "</ol>";
+        document.getElementById("result").innerHTML = allDef;
+    }
+    else // Returns only a single entry
+    {
+        for (i = 0; i <x.length; i++) 
+        { 
+            if (x[i].getAttributeNode("name").value.toLowerCase() == query)
             {
-                //get the XHML request of the html file
-                event.preventDefault();
-                var getHTTP = new XMLHttpRequest();
-                getHTTP.onreadystatechange = getHTML;
-                getHTTP.open("Get", "request.php?q=definition");
-                getHTTP.send();
-                
-                function getHTML()
-                {
-                    if(getHTTP.readyState === XMLHttpRequest.DONE)
-                    {
-                        if(getHTTP.status === 200)
-                        {
-                            alert(getHTTP.responseText);
-                        }
-                    }
-                }
-            });
-           
-}; 
+                document.getElementById("result").innerHTML  = "<ol><li>" + "<h3>" + x[i].getAttributeNode("name").value + "</h3>" + 
+                "<p>" + x[i].childNodes[0].nodeValue + "</p>" +                             
+                "<p> - " + x[i].getAttributeNode("author").value + "</p>" +                 
+                "</li></ol>";
+                notFound = false;
+                break;
+            }
+            
+        }
+        
+        if(notFound) // No results found
+        {
+            document.getElementById("result").innerHTML  = "<h3>No Results found for: '" + query + "'</h3>";
+        }
+    }
+}
